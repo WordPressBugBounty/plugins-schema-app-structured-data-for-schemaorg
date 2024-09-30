@@ -16,41 +16,43 @@ Get Schema.org structured data for all pages, posts, categories and profile page
 
 == Description ==
 
-**What Markup does Schema App WordPress Plugin Create?**
+**What does the Schema App Structured Data WordPress Plugin Do?**
 
-The Schema App WordPress plugin automatically creates [schema.org](https://schema.org/) markup for all your pages, posts, author and category content leveraging information that already exists in your WordPress website. Just activate the plugin, add your logo and the name of your business, and your content is optimized to be fully understood by search engines resulting in higher traffic, higher click-through rates and more. The plugin also provides all three Google Site Structure features including Breadcrumbs, Sitelinks Searchbox and Your Site Name in Results.
+The Schema App Structured Data WordPress Plugin automatically creates and deploys the default Schema.org Markup for your pages, posts, author, and other types of content on your WordPress site. By adding Schema Markup to your WordPress site, your pages will be eligible for rich results – allowing your site to stand out in search and get more clicks and conversions.
 
-**What type of markup is automatically created with this plugin?**
+The plugin leverages the existing content on your site to automatically create and deploy the appropriate type of Schema Markup to your pages. Simply activate the plugin, add your business name and logo, and you’re done.
 
-* Page : http://schema.org/Article
-* Post : http://schema.org/BlogPosting
-* Search : http://search.org/SearchResultsPage
-* Author : http://schema.org/ProfilePage
-* Category : http://schema.org/CollectionPage
-* Tag : http://schema.org/CollectionPage
-* Blog : http://schema.org/Blog
-* BreadcrumbList : http://schema.org/BreadcrumbList
-* VideoObject: https://schema.org/VideoObject
-* WebSite : http://schema.org/WebSite
+**What type of default Schema Markup is automatically created with the Schema App WordPress Plugin?**
 
-Customization of Page and Post schema markup can be done through default settings (e.g. posts can default to NewsArticle) as well as by directly editing the generated JSON-LD for each page.
+- Page: https://schema.org/Article
+- Post: https://schema.org/BlogPosting
+- Search: https://search.org/SearchResultsPage
+- Author: https://schema.org/ProfilePage
+- Category: https://schema.org/CollectionPage
+- Tag: https://schema.org/CollectionPage
+- Blog: https://schema.org/Blog
+- BreadcrumbList: https://schema.org/BreadcrumbList
+- WebSite: https://schema.org/WebSite
 
-[Google's Powerful Video Features](https://developers.google.com/search/docs/appearance/structured-data/video) are added automatically for all videos hosted by YouTube and Vimeo. 
+The plugin also automatically adds Video Schema Markup for all YouTube Videos embedded on your page.
 
-**Advanced WordPress plugin**
+You can customize your Page and Post Schema Markup through the default settings (e.g. posts can default to NewsArticle) or by directly editing the generated JSON-LD for each page.
 
-Do you want even better schema markup results than what the free Schema App plugin offers? To achieve this you need to optimize your whole website with schema markup.
+**End-to-End Schema Markup Solution for Enterprise Marketing Teams**
 
-Schema App enables marketers to create custom schema.org markup for a website’s Local Business, Organization, Services, Reviews, Contact Page and more. Schema App has the complete schema.org vocabulary, requires no JSON-LD coding, and helps you do ongoing Schema Markup maintenance when Google changes their recommendations. 
+Need more than just default Schema Markup for your WordPress site? We can help.
 
-Schema App Pro subscriptions include support from our experts in schema markup and access to the Schema App Advanced WordPress Plugin. The Advanced Plugin compliments this base Schema Plugin by adding capabilities including:
+At Schema App, we offer an end-to-end custom Schema Markup solution for WordPress users. Our End-to-End Schema Markup Solution includes:
 
-* WooCommerce Products
-* Link Category & Tag Definitions to Wikipedia, Wikidata
-* Page & Post Review Widget
-* Custom Post & Field Mapping
+- Access to Schema App Editor to generate custom Schema Markup for any page on your website
+- Access to the Schema App Highlighter to generate accurate, advanced Schema Markup at scale and deploy JSON-LD to your WordPress site
+- An assigned Customer Success Manager to help you manage your entire Schema Markup process, from strategy to results
+- Development of a reusable content knowledge graph that gives you insights into your content strategy and supports AI-driven search
 
-Want to learn more about how to get the advanced WordPress Plugin? Learn more [here](https://www.schemaapp.com/solutions/wordpress-plugin/).
+With our solution, you can generate custom Schema Markup to describe your website content in detail and develop a reusable content knowledge graph that drives quality traffic to your site.
+
+[Contact us](https://www.schemaapp.com/get-started/?utm_source=WordPress&utm_medium=Plugin+Repository) to learn how we can help you implement accurate, robust Schema Markup at scale across your WordPress site.
+
 
 == Installation ==
 
