@@ -404,8 +404,9 @@ class SchemaFront
                 }
             }
 
-            // Only POST to Page Count API if default markup has changed, and if graph URI is specified
-            if ($DefaultMarkup && !empty($this->Settings['graph_uri'])) {
+            // Only POST to Page Count API if default markup has changed, graph URI is specified,
+            // and this is not a search page.
+            if ($DefaultMarkup && !empty($this->Settings['graph_uri']) && !is_search()) {
                 $DefaultMarkupChanged = $this->checkCachedDefaultMarkup($post->ID, $DefaultMarkup);
                 if ($DefaultMarkupChanged) {
                     $this->post_to_page_count($DefaultMarkup);
