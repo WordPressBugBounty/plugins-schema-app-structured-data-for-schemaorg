@@ -4,7 +4,7 @@
  * Plugin Name: Schema App Structured Data
  * Plugin URI: http://www.schemaapp.com
  * Description: This plugin adds http://schema.org structured data to your website
- * Version: 2.2.4
+ * Version: 2.2.5
  * Author: Schema App
  * Author URI: https://www.schemaapp.com
  */
@@ -15,7 +15,7 @@ try {
     if (is_admin()) {
         require_once(ABSPATH . 'wp-admin/includes/plugin.php');
 
-        $HunchSchemaPluginData = get_plugin_data(__FILE__);
+        $HunchSchemaPluginData = get_plugin_data(__FILE__, true, false);
         $HunchSchemaPluginVersion = $HunchSchemaPluginData['Version'];
         $HunchSchemaPluginURL = trailingslashit(plugins_url('', __FILE__));
 

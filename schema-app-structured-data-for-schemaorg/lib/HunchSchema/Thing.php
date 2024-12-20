@@ -79,32 +79,35 @@ class HunchSchema_Thing {
 		if ( ! $wp->did_permalink && count( $wp->query_vars ) > 0 ) {
 			// Prefer customUrl over home_url if specified
 			if ($customUrl) {
+				$customUrl = esc_url_raw($customUrl);
 				$permalink = rtrim($customUrl, '/') . '/';
 			} else {
-				$permalink = home_url( '/' );
+				$permalink = esc_url_raw(home_url( '/' ));
 			}
-			$permalink .= '?' . urldecode( strtok( $wp->query_string, '&' ) );
+			$sanitized_query_string = esc_url_raw( strtok( $wp->query_string, '&' ) );
+			$permalink .= '?' . $sanitized_query_string;
 
-			return apply_filters( 'hunch_schema_thing_markup_permalink', $permalink );
+			return apply_filters( 'hunch_schema_thing_markup_permalink', esc_url($permalink) );
 		}
 
 		// Prefer customUrl over home_url if specified
 		// We use home_url instead of site_url as WP directory can be different from homepage
 		if ($customUrl) {
-			// Trim trailing slash to prevent duplicates
-			$permalink = rtrim($customUrl, '/') . '/' . add_query_arg( array(), $wp->request );
+			$customUrl = esc_url_raw($customUrl);
+			$permalink = esc_url( rtrim($customUrl, '/') . '/' . add_query_arg( array(), $wp->request ) );
 		} else {
-			$permalink = home_url( add_query_arg( array() , $wp->request ) );
+			$permalink = esc_url( home_url( add_query_arg( array(), $wp->request ) ) );
 		}
 
-		// Check permalink structure to determine if trailing slash should be added 
+		// Check permalink structure to determine if trailing slash should be added
 		$permalinkStructure = get_option('permalink_structure');
-		if(substr($permalinkStructure, -1, 1 ) === '/') {
+		if ( '/' === substr(sanitize_text_field($permalinkStructure), -1) ) {
 			$permalink = rtrim($permalink, '/') . '/';
 		}
 
-		return apply_filters( 'hunch_schema_thing_markup_permalink', $permalink );
+		return apply_filters( 'hunch_schema_thing_markup_permalink', esc_url($permalink) );
 	}
+
 
 
 	protected function getExcerpt() {

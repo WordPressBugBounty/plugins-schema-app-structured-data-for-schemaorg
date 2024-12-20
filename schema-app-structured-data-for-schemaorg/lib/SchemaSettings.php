@@ -91,7 +91,7 @@ class SchemaSettings
 
     /**
      * 
-     * @return type
+     * @return void
      */
     public function welcome_screen_do_activation_redirect() {
         
@@ -111,9 +111,19 @@ class SchemaSettings
             return;
         }
 
-        // Redirect to schema app about page
-        wp_safe_redirect( add_query_arg( array( 'page' => 'schema-app-setting', 'tab' => 'schema-app-welcome' ), admin_url( 'options-general.php' ) ) );        
-
+        // Construct the redirect URL
+        $redirect_url = esc_url(
+            add_query_arg(
+                array(
+                    'page' => 'schema-app-setting',
+                    'tab' => 'schema-app-welcome'
+                ),
+                admin_url( 'options-general.php' )
+            )
+        );
+        // Redirect to the schema app about page and terminate the script
+        wp_safe_redirect( $redirect_url );
+        exit;
     }
     /**
      * 
@@ -157,10 +167,17 @@ class SchemaSettings
 			update_option( 'schema_option_name', $this->Settings );
         }
 
-		if ( empty( $this->Settings['NoticeDismissWooCommerceAddon'] ) && class_exists( 'WooCommerce' ) && ! function_exists( 'hunch_schema_wc_add' ) && ! class_exists( 'SchemaAppAdvanced' ) )
-		{
-			printf( '<div class="notice notice-success"> <p>Schema App WooCommerce is not installed but recommended for your WooCommerce products - <a target="_blank" href="https://www.schemaapp.com/product/schema-woocommerce-plugin/">See more</a>. &nbsp; <a href="%s">Dismiss</a></p> </div>', add_query_arg( 'NoticeDismiss', 'WooCommerceAddon' ) );
-		}
+        // Display notice if WooCommerce Addon is not installed
+        if ( empty( $this->Settings['NoticeDismissWooCommerceAddon'] )
+            && class_exists( 'WooCommerce' )
+            && ! function_exists( 'hunch_schema_wc_add' )
+            && ! class_exists( 'SchemaAppAdvanced' )
+        ) {
+            printf(
+                    '<div class="notice notice-success"> <p>Schema App WooCommerce is not installed but recommended for your WooCommerce products - <a target="_blank" href="https://www.schemaapp.com/product/schema-woocommerce-plugin/">See more</a>. &nbsp; <a href="%s">Dismiss</a></p> </div>',
+                    esc_url( add_query_arg( 'NoticeDismiss', 'WooCommerceAddon' ) )
+            );
+        }
 
         ?>
         <div class="wrap">
@@ -608,7 +625,9 @@ class SchemaSettings
 
             set_transient( 'hunch_schema_delete_transient_cache_success', true, 60 );
 
-            wp_safe_redirect( add_query_arg( array( 'page' => 'schema-app-setting' ), admin_url( 'options-general.php' ) ) );
+            // Redirect securely
+            wp_safe_redirect( esc_url( add_query_arg( array( 'page' => 'schema-app-setting' ), admin_url( 'options-general.php' ) ) ) );
+            exit;
         } elseif (
             ! empty( $_GET['delete_transient_cache'] )
             && $_GET['delete_transient_cache'] == 'all'
@@ -616,7 +635,9 @@ class SchemaSettings
         ) {
             set_transient( 'hunch_schema_delete_transient_cache_failure', true, 60 );
 
-            wp_safe_redirect( add_query_arg( array( 'page' => 'schema-app-setting' ), admin_url( 'options-general.php' ) ) );
+            // Redirect securely
+            wp_safe_redirect( esc_url( add_query_arg( array( 'page' => 'schema-app-setting' ), admin_url( 'options-general.php' ) ) ) );
+            exit;
         }
     }
     
@@ -848,7 +869,7 @@ class SchemaSettings
 
     public function transient_cache_delete_callback() {
         printf( '<a class="button button-secondary" href="%s">Delete Transient Cache</a>
-            <p>All API responses are stored in Transient cache to improve page rendering time.</p>', 
+            <p>All API responses are stored in Transient cache to improve page rendering time.</p>',
             esc_url(
                 add_query_arg(
                     array(
@@ -861,6 +882,7 @@ class SchemaSettings
             )
         );
     }
+
 
     public function page_cache_delete_callback( $Options )
 	{
@@ -1395,10 +1417,10 @@ class SchemaSettings
         if ( current_user_can( 'manage_options' ) ) {
             $graphNotice = isset( $this->Settings['schema_ignore_notice_graph'] ) ? esc_attr( $this->Settings['schema_ignore_notice_graph']) : '';
             $pubNotice = isset( $this->Settings['schema_ignore_notice_publisher'] ) ? esc_attr( $this->Settings['schema_ignore_notice_publisher']) : '';
-            if (empty($this->Settings['graph_uri']) && $graphNotice !== '1') {            
+            if (empty($this->Settings['graph_uri']) && $graphNotice !== '1') {
                 printf( '<div class="notice notice-info hunch-schema-notice-dis"><p>Setup Schema App Structured Data with <a href="%s">Settings &#8594; Schema App</a> | <a id="hunch-schema-notice-dismiss" href="%s">Dismiss</a></p></div>', esc_url( admin_url( 'options-general.php?page=schema-app-setting' ) ), esc_url( add_query_arg( 'schema_ignore_notice_graph', '0' ) ) );
             } elseif (empty($this->Settings['publisher_type']) && $pubNotice !== '1') {
-                printf( '<div class="notice notice-info hunch-schema-notice-dis"><p>Set Schema App Structured Data Publisher <a href="%s">Settings &#8594; Schema App</a> | <a id="hunch-schema-notice-dismiss" href="%s">Dismiss</a></p></div>', esc_url( admin_url( 'options-general.php?page=schema-app-setting' ) ), esc_url( add_query_arg( 'schema_ignore_notice_pub', '0' ) ) ); 
+                printf( '<div class="notice notice-info hunch-schema-notice-dis"><p>Set Schema App Structured Data Publisher <a href="%s">Settings &#8594; Schema App</a> | <a id="hunch-schema-notice-dismiss" href="%s">Dismiss</a></p></div>', esc_url( admin_url( 'options-general.php?page=schema-app-setting' ) ), esc_url( add_query_arg( 'schema_ignore_notice_pub', '0' ) ) );
             }
         }
     }
