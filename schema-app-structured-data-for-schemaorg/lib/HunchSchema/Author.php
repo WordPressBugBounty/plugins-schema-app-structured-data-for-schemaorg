@@ -16,12 +16,15 @@ class HunchSchema_Author extends HunchSchema_Thing {
     }
 
     public function getResource($pretty = false) {
-		global $post;
+        global $post;
+
+        if (empty($post->post_author)) {
+            return $this->toJson( array(), $pretty );
+        }
 
         $author = $this->getAuthor();
 
-        $this->schema = array
-        (
+        $this->schema = array(
             '@context' => 'https://schema.org/',
             '@type' => $this->schemaType,
             '@id' => esc_url(get_author_posts_url(get_the_author_meta('ID', $post->post_author))) . '#' . $this->schemaType,

@@ -162,7 +162,7 @@ class HunchSchema_Thing {
 		if ( ! $post_content ) {
 			global $post;
 
-			$post_content = apply_filters( 'the_content', $post->post_content );
+			$post_content = !empty($post->post_content) ? apply_filters( 'the_content', $post->post_content ) : array();
 		}
 
 		return $post_content;
@@ -257,6 +257,10 @@ class HunchSchema_Thing {
 	protected function getTags() {
 		global $post;
 
+		if (empty($post->ID)) {
+			return array();
+		}
+
 		$post_tags = wp_get_post_terms( $post->ID, 'post_tag', array( 'fields' => 'names' ) );
 
 		if ( $post_tags && ! is_wp_error( $post_tags ) ) {
@@ -267,6 +271,10 @@ class HunchSchema_Thing {
 
 	protected function getComments() {
 		global $post;
+
+		if (empty($post->ID)) {
+			return array();
+		}
 
 		$comments = array();
 		$post_comments = get_comments( array( 'post_id' => $post->ID, 'number' => 10, 'status' => 'approve', 'type' => 'comment' ) );
@@ -293,6 +301,10 @@ class HunchSchema_Thing {
 
 	protected function getAuthor() {
 		global $post;
+
+		if (empty($post->post_author)) {
+			return array();
+		}
 
 		$author = array (
 			'@type' => 'Person',
@@ -375,8 +387,6 @@ class HunchSchema_Thing {
 
 
 	public function getVideos() {
-		global $post;
-
 		$post_content		= $this->getContent();
 		$featured_video_url	= '';
 
