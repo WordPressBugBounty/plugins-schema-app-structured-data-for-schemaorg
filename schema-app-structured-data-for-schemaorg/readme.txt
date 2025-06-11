@@ -8,7 +8,7 @@ Author: Schema App
 Requires at least: 4.4
 Requires PHP: 5.4
 Tested up to: 6.8
-Stable tag: 2.2.6
+Stable tag: 2.2.7
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,10 @@ You'll find the [FAQ on SchemaApp.com](https://www.schemaapp.com/solutions/wordp
 5. Link to Validation
 
 == Changelog ==
+
+= 2.2.7 =
+Release Date - 11 June 2025
+- Fix, Declare class properties instead of creating dynamically to remedy deprecation warnings
 
 = 2.2.6 =
 Release Date - 24 Apr 2025

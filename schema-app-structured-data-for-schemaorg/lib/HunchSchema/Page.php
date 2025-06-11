@@ -10,10 +10,15 @@ defined('ABSPATH') OR die('This script cannot be accessed directly.');
 class HunchSchema_Page extends HunchSchema_Thing
 {
     /**
+     * @var mixed|string
+     */
+    private $schemaType;
+
+    /**
      * Get Default Schema.org for Resource
      * 
-     * @param type boolean
-     * @return type string
+     * @param boolean $pretty Whether to pretty-print the JSON output
+     * @return string JSON encoded schema markup
      */
     public function getResource($pretty = false)
     {
@@ -23,13 +28,12 @@ class HunchSchema_Page extends HunchSchema_Thing
 
         if ( is_front_page() )
         {
-			$Permalink = home_url();
+            $Permalink = home_url();
         }
 
         $MarkupTypeDefault = ! empty( $this->Settings['SchemaDefaultTypePage'] ) ? $this->Settings['SchemaDefaultTypePage'] : 'Article';
         $MarkupType = get_post_meta( $post->ID, '_HunchSchemaType', true );
-		$this->schemaType = $MarkupType ? $MarkupType : $MarkupTypeDefault;
-
+        $this->schemaType = $MarkupType ?: $MarkupTypeDefault;
 
         $this->schema = array
         (
@@ -48,52 +52,51 @@ class HunchSchema_Page extends HunchSchema_Thing
             'url' => $Permalink,
         );
 
-		if ( ! empty( $this->Settings['SchemaDefaultVideoMarkup'] ) )
-		{
-			$this->schema['video'] = $this->getVideos();
-		}
+        if ( ! empty( $this->Settings['SchemaDefaultVideoMarkup'] ) )
+        {
+            $this->schema['video'] = $this->getVideos();
+        }
 
-		if ( get_comments_number() && empty( $this->Settings['SchemaHideComments'] ) )
-		{
-			$this->schema['commentCount'] = get_comments_number();
-			$this->schema['comment'] = $this->getComments();
-		}
+        if ( get_comments_number() && empty( $this->Settings['SchemaHideComments'] ) )
+        {
+            $this->schema['commentCount'] = get_comments_number();
+            $this->schema['comment'] = $this->getComments();
+        }
 
         return $this->toJson( $this->schema, $pretty );
     }
 
-
     public function getBreadcrumb( $Pretty = false ) {
-		global $post;
+        global $post;
 
-		$position							= 1;
-		$this->SchemaBreadcrumb['@context']	= 'https://schema.org';
-		$this->SchemaBreadcrumb['@type']	= 'BreadcrumbList';
-		$this->SchemaBreadcrumb['@id']  	= get_permalink( $post->ID ) . '#BreadcrumbList';
+        $position                            = 1;
+        $this->SchemaBreadcrumb['@context']    = 'https://schema.org';
+        $this->SchemaBreadcrumb['@type']    = 'BreadcrumbList';
+        $this->SchemaBreadcrumb['@id']      = get_permalink( $post->ID ) . '#BreadcrumbList';
 
-		if ( $post->post_parent ) {
-			$post_ancestors = array_reverse( get_post_ancestors( $post->ID ) );
+        if ( $post->post_parent ) {
+            $post_ancestors = array_reverse( get_post_ancestors( $post->ID ) );
 
-			foreach( $post_ancestors as $post_id ) {
-				$this->SchemaBreadcrumb['itemListElement'][] = array(
-					'@type' => 'ListItem',
-					'position' => $position++,
-					'name' => get_the_title( $post_id ),
-					'item' => get_permalink( $post_id ) . "#breadcrumbitem",
-				);
-			}
-		}
+            foreach( $post_ancestors as $post_id ) {
+                $this->SchemaBreadcrumb['itemListElement'][] = array(
+                    '@type' => 'ListItem',
+                    'position' => $position++,
+                    'name' => get_the_title( $post_id ),
+                    'item' => get_permalink( $post_id ) . "#breadcrumbitem",
+                );
+            }
+        }
 
-		if ( ! is_front_page() ) {
-			$this->SchemaBreadcrumb['itemListElement'][] = array(
-				'@type' => 'ListItem',
-				'position' => $position++,
-				'name' => get_the_title(),
-				'item' => get_permalink() . '#breadcrumbitem',
-			);
-		} else {
-			return;
-		}
+        if ( ! is_front_page() ) {
+            $this->SchemaBreadcrumb['itemListElement'][] = array(
+                '@type' => 'ListItem',
+                'position' => $position++,
+                'name' => get_the_title(),
+                'item' => get_permalink() . '#breadcrumbitem',
+            );
+        } else {
+            return;
+        }
 
         return $this->toJson( $this->SchemaBreadcrumb, $Pretty );
     }

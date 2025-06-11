@@ -6,6 +6,17 @@
  */
 class HunchSchema_Post extends HunchSchema_Page
 {
+    /**
+     * @var mixed|string
+     */
+    private $schemaType;
+
+    /**
+     * Get Default Schema.org for Resource
+     *
+     * @param boolean $pretty Whether to pretty-print the JSON output
+     * @return string JSON encoded schema markup
+     */
     public function getResource($pretty = false)
     {
         global $post;

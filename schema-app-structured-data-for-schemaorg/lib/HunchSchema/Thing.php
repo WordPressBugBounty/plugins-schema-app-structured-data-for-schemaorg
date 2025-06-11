@@ -14,6 +14,7 @@ class HunchSchema_Thing {
 	protected $schema;
 	protected $SchemaBreadcrumb;
 	protected $Settings;
+    protected $SchemaWebSite;
 
 	/**
 	 * Construuctor
