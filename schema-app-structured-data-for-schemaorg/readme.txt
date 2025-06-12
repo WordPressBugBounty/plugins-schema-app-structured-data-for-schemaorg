@@ -8,7 +8,7 @@ Author: Schema App
 Requires at least: 4.4
 Requires PHP: 5.4
 Tested up to: 6.8
-Stable tag: 2.2.7
+Stable tag: 2.2.8
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,11 @@ You'll find the [FAQ on SchemaApp.com](https://www.schemaapp.com/solutions/wordp
 5. Link to Validation
 
 == Changelog ==
+
+= 2.2.8 =
+Release Date - 12 June 2025
+- Fix, Visibility for declared class properties for schema type on Page and Post
+- Fix, Post content is handled correctly as string not array
 
 = 2.2.7 =
 Release Date - 11 June 2025

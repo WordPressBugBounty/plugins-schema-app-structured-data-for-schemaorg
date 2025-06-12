@@ -9,7 +9,7 @@ class HunchSchema_Post extends HunchSchema_Page
     /**
      * @var mixed|string
      */
-    private $schemaType;
+    public $schemaType;
 
     /**
      * Get Default Schema.org for Resource

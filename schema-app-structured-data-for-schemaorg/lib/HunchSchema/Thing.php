@@ -163,7 +163,9 @@ class HunchSchema_Thing {
 		if ( ! $post_content ) {
 			global $post;
 
-			$post_content = !empty($post->post_content) ? apply_filters( 'the_content', $post->post_content ) : array();
+			if (!empty($post->post_content)) {
+				return apply_filters( 'the_content', $post->post_content );
+			}
 		}
 
 		return $post_content;

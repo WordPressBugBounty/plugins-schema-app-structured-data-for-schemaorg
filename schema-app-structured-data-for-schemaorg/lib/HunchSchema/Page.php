@@ -12,7 +12,7 @@ class HunchSchema_Page extends HunchSchema_Thing
     /**
      * @var mixed|string
      */
-    private $schemaType;
+    public $schemaType;
 
     /**
      * Get Default Schema.org for Resource
