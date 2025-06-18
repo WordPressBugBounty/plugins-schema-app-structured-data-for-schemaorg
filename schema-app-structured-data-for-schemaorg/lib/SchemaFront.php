@@ -390,7 +390,7 @@ class SchemaFront
                         printf('<script type="application/ld+json" data-source="DataFeed:WordPress" data-schema="Breadcrumb">%s</script>' . "\n", wp_json_encode($DecodedMarkupBreadcrumb));
                     }
 
-                    $DefaultMarkup[] = $SchemaMarkupBreadcrumb;
+                    $DefaultMarkup[] = $DecodedMarkupBreadcrumb;
                 }
             }
 
