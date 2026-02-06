@@ -234,35 +234,33 @@ class SchemaFront
         try {
             global $post;
 
-            if (empty($post)) {
+            // Exclude: empty posts, admin pages, attachments
+            if (empty($post) || is_admin() || is_attachment()) {
+                return;
+            }
+            // Exclude WooCommerce account and checkout pages
+            if (class_exists('WooCommerce') && (is_account_page() || is_checkout())) {
                 return;
             }
 
             $PostType = get_post_type();
 
-
+            // Check settings for whether to show markup for singular pages
             if (is_singular()) {
                 $global_markup = true;
                 $single_markup_disable = get_post_meta($post->ID, '_HunchSchemaDisableMarkup', true);
                 $single_markup_enable = get_post_meta($post->ID, '_HunchSchemaEnableMarkup', true);
-
-                if ($PostType == 'page' && isset($this->Settings['SchemaDefaultShowOnPage']) && $this->Settings['SchemaDefaultShowOnPage'] == 0) {
+                $typeSettings = [
+                    'page' => 'SchemaDefaultShowOnPage',
+                    'post' => 'SchemaDefaultShowOnPost'
+                ];
+                if (isset($typeSettings[$PostType]) && isset($this->Settings[$typeSettings[$PostType]]) && $this->Settings[$typeSettings[$PostType]] == 0) {
                     $global_markup = false;
                 }
-
-                if ($PostType == 'post' && isset($this->Settings['SchemaDefaultShowOnPost']) && $this->Settings['SchemaDefaultShowOnPost'] == 0) {
-                    $global_markup = false;
-                }
-
-                if (($global_markup && $single_markup_disable) || (!$global_markup && !$single_markup_enable)) {
-                    return;
-                }
-
-                if (class_exists('WooCommerce') && (is_account_page() || is_checkout())) {
+                if ($global_markup && $single_markup_disable || !$global_markup && !$single_markup_enable) {
                     return;
                 }
             }
-
 
             $SchemaThing = HunchSchema_Thing::factory($PostType);
             $SchemaServer = new SchemaServer();

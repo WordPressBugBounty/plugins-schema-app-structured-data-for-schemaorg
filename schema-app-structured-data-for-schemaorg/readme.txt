@@ -7,8 +7,8 @@ Author URI: https://www.schemaapp.com
 Author: Schema App
 Requires at least: 4.4
 Requires PHP: 5.4
-Tested up to: 6.8
-Stable tag: 2.2.9
+Tested up to: 6.9
+Stable tag: 2.3.0
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,11 @@ You'll find the [FAQ on SchemaApp.com](https://www.schemaapp.com/solutions/wordp
 5. Link to Validation
 
 == Changelog ==
+= 2.3.0 =
+Release Date - 02 Dec 2025
+- Improve, Tested up to WordPress 6.9
+- Fix, Do not attempt to render markup or send to SchemaApp when page is 404 or is attachment
+
 = 2.2.9 =
 Release Date - 18 June 2025
 - Fix, Breadcrumb format in routine that sends markup to SchemaApp for paid accounts
