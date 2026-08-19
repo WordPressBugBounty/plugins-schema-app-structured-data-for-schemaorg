@@ -7,8 +7,8 @@ Author URI: https://www.schemaapp.com
 Author: Schema App
 Requires at least: 4.4
 Requires PHP: 5.4
-Tested up to: 7.0
-Stable tag: 2.3.1
+Tested up to: 7.1
+Stable tag: 2.3.2
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,10 @@ You'll find the [FAQ on SchemaApp.com](https://www.schemaapp.com/solutions/wordp
 5. Link to Validation
 
 == Changelog ==
+= 2.3.2 =
+Release Date - 17 Aug 2026
+- Improve, Tested up to WordPress 7.1
+
 = 2.3.1 =
 Release Date - 08 Apr 2026
 - Improve, Tested up to WordPress 7.0
