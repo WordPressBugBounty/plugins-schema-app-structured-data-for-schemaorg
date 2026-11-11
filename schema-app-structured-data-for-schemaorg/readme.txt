@@ -8,7 +8,7 @@ Author: Schema App
 Requires at least: 4.4
 Requires PHP: 5.4
 Tested up to: 7.1
-Stable tag: 2.3.2
+Stable tag: 2.4.0
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,12 @@ You'll find the [FAQ on SchemaApp.com](https://www.schemaapp.com/solutions/wordp
 5. Link to Validation
 
 == Changelog ==
+= 2.4.0 =
+Release Date - 05 Nov 2026
+- Drop support for Remove Microdata on WordPress versions earlier than 6.2. Setting has no effect on earlier WordPress versions
+- Security fix, Harden Remove Microdata so attribute values cannot break out of the HTML around them
+- Improve, Link and meta tags that carried microdata are kept, with only the microdata attributes removed
+
 = 2.3.2 =
 Release Date - 17 Aug 2026
 - Improve, Tested up to WordPress 7.1
@@ -734,6 +740,9 @@ Release Date - 18 July 2018
 - First version 
 
 == Upgrade Notice ==
+
+= 2.4.0 =
+- Remove Microdata requires WordPress 6.2 or later. Setting has no effect on earlier WordPress versions
 
 = 1.17.15 =
 - Fix Cache REST API Account Id validation for Highlighter JS

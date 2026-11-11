@@ -129,7 +129,7 @@ class SchemaEditor {
             margin: 0 1em;
         }
         </style>
-        <?php _e('Post JSON-LD', 'schema_textdomain'); ?>
+        <?php esc_html_e('Post JSON-LD', 'schema_textdomain'); ?>
             <div id="schemapostlinks">
                 <?php 
 					if ( $markup_final )
@@ -142,7 +142,7 @@ class SchemaEditor {
 								<button><a target="_blank" href="<?php echo esc_url($replacelink); ?>">Use Different Schema.org Type</a></button>
 								<button id="extendSchema" value="Extend Markup"><a target="_blank" href="#">Add to <?php echo esc_html($schemaObj->schemaType); ?> Default Markup</a></button>
 							<?php endif; ?>
-							<input type="hidden" id="resourceURI" value="<?php echo get_permalink($post->ID); ?>#<?php print esc_html($schemaObj->schemaType); ?>"/>
+							<input type="hidden" id="resourceURI" value="<?php echo esc_url( get_permalink($post->ID) ); ?>#<?php print esc_html($schemaObj->schemaType); ?>"/>
 							<textarea id="resourceData" style="display:none"><?php echo esc_attr($jsonLd); ?></textarea> 
 							<?php 
 						}
@@ -230,7 +230,7 @@ class SchemaEditor {
 				<?php if ( $global_markup ) : ?>
 					<tr>
 						<td style="width: 30%;">
-							<?php _e('Disable Schema markup', 'schema_textdomain'); ?>
+							<?php esc_html_e('Disable Schema markup', 'schema_textdomain'); ?>
 						</td>
 						<td>
 							<input type="checkbox" name="HunchSchemaDisableMarkup" value="1" <?php $this->CheckSelected(1, $single_markup_disable, 'checkbox'); ?>>
@@ -239,7 +239,7 @@ class SchemaEditor {
 				<?php else : ?>
 					<tr>
 						<td style="width: 30%;">
-							<?php _e('Enable Schema markup', 'schema_textdomain'); ?>
+							<?php esc_html_e('Enable Schema markup', 'schema_textdomain'); ?>
 						</td>
 						<td>
 							<input type="checkbox" name="HunchSchemaEnableMarkup" value="1" <?php $this->CheckSelected(1, $single_markup_enable, 'checkbox'); ?>>
@@ -250,7 +250,7 @@ class SchemaEditor {
 				<?php if ( $PostType == 'page' ) : ?>
 					<tr>
 						<td>
-							<?php _e('Select Type', 'schema_textdomain'); ?>
+							<?php esc_html_e('Select Type', 'schema_textdomain'); ?>
 						</td>
 						<td>
 							<select name="HunchSchemaType">

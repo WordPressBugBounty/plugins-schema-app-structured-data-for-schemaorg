@@ -208,6 +208,7 @@ class HunchSchema_Thing {
 		if ( ! empty( $this->Settings['SchemaDefaultImage'] ) ) {
 			global $wpdb;
 
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- no WP API to get attachment by GUID
 			$attachment = $wpdb->get_row( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE guid = %s", $this->Settings['SchemaDefaultImage'] ) );
 
 			if ( $attachment && wp_get_attachment_image_src( $attachment->ID ) ) {
@@ -359,6 +360,7 @@ class HunchSchema_Thing {
 
 					$image_property = ( $options['publisher_type'] === 'Person' ) ? 'image' : 'logo';
 
+					// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- no WP API to get attachment by GUID
 					$pubimage = $wpdb->get_row( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE guid = %s", $options['publisher_image'] ) );
 
 					// Publisher image found, add it to schema

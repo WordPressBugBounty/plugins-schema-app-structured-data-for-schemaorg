@@ -185,15 +185,15 @@ class SchemaSettings
             <div></div>
 
 			<h3 class="nav-tab-wrapper">
-				<a class="nav-tab" href="<?php echo admin_url( 'options-general.php?page=schema-app-welcome' ) ?>">Quick Guide</a>
-				<a class="nav-tab nav-tab-active" href="<?php echo admin_url( 'options-general.php?page=schema-app-setting' ) ?>">Settings</a>
-				<a class="nav-tab" href="<?php echo admin_url( 'options-general.php?page=schema-app-licenses' ) ?>">Licenses</a>
+				<a class="nav-tab" href="<?php echo esc_url( admin_url( 'options-general.php?page=schema-app-welcome' ) ); ?>">Quick Guide</a>
+				<a class="nav-tab nav-tab-active" href="<?php echo esc_url( admin_url( 'options-general.php?page=schema-app-setting' ) ); ?>">Settings</a>
+				<a class="nav-tab" href="<?php echo esc_url( admin_url( 'options-general.php?page=schema-app-licenses' ) ); ?>">Licenses</a>
 				<?php if ( function_exists( 'genesis' ) ) : ?>
-					<a class="nav-tab" href="<?php echo admin_url( 'options-general.php?page=schema-app-setting-genesis' ) ?>">Genesis</a>
+					<a class="nav-tab" href="<?php echo esc_url( admin_url( 'options-general.php?page=schema-app-setting-genesis' ) ); ?>">Genesis</a>
 				<?php endif; ?>
 				<?php do_action( 'hunch_schema_settings_nav_tab' ); ?>
 				<?php if ( isset( $_GET['debug'] ) && ! empty( $this->Settings['Debug'] ) ) : // Only show Debugging when manually triggered ?>
-					<a class="nav-tab" href="<?php echo admin_url( 'options-general.php?page=schema-app-debug' ) ?>">Debugging</a>
+					<a class="nav-tab" href="<?php echo esc_url( admin_url( 'options-general.php?page=schema-app-debug' ) ); ?>">Debugging</a>
 				<?php endif; ?>
 			</h3>
 
@@ -613,6 +613,7 @@ class SchemaSettings
         ) {
             global $wpdb;
 
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- no WP API to list transients by pattern
             $transients = $wpdb->get_col( "SELECT DISTINCT option_name  FROM {$wpdb->options}  WHERE option_name LIKE '_transient_HunchSchema-Markup-%'" );
 
             if ( $transients ) {
@@ -764,6 +765,7 @@ class SchemaSettings
 		if ( count( $_POST ) ) {
 			if ( count( $_POST ) && ! empty( $_POST['debug_delete_transient'] ) ) {
 				if ( $_POST['debug_delete_transient'] == 'all' ) {
+					// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- no WP API to list transients by pattern
 					$transients = $wpdb->get_col( "SELECT DISTINCT option_name  FROM {$wpdb->options}  WHERE option_name LIKE '_transient_HunchSchema-Markup-%'" );
 
 					if ( $transients ) {
@@ -821,6 +823,7 @@ class SchemaSettings
 		}
 
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- no WP API to list transients by pattern
 		$transients = $wpdb->get_col( "SELECT DISTINCT option_name  FROM {$wpdb->options}  WHERE option_name LIKE '_transient_HunchSchema-Markup-%'" );
 
 
@@ -1082,8 +1085,8 @@ class SchemaSettings
 
 	public function SettingsFieldSchemaDefaultImage( $Options )
 	{
-		$Value = empty ( $this->Settings['SchemaDefaultImage'] ) ? "" : esc_attr( $this->Settings['SchemaDefaultImage'] );
-		print '<input id="SchemaDefaultImage" class="regular-text" type="text" name="schema_option_name[SchemaDefaultImage]" value="' . $Value . '" title="' . $Value . '"> <button id="SchemaDefaultImageSelect" class="button">Select</button>';
+		$Value = empty ( $this->Settings['SchemaDefaultImage'] ) ? '' : $this->Settings['SchemaDefaultImage'];
+		print '<input id="SchemaDefaultImage" class="regular-text" type="text" name="schema_option_name[SchemaDefaultImage]" value="' . esc_url( $Value ) . '" title="' . esc_attr( $Value ) . '"> <button id="SchemaDefaultImageSelect" class="button">Select</button>';
 		print '<p>Default image for BlogPosting (Posts) or Article (Pages) when none is available.</p>';
 	}
 
@@ -1386,11 +1389,11 @@ class SchemaSettings
         ?>
         <table id="dt-page-definition" width="100%" cellspacing="5px">
             <tr valign="top">
-                <td style="width:20%;"><label for="dt-heading"><?php _e( 'Subtitle:', FB_DT_TEXTDOMAIN ); ?></label></td>
+                <td style="width:20%;"><label for="dt-heading"><?php esc_html_e( 'Subtitle:', FB_DT_TEXTDOMAIN ); ?></label></td>
                 <td><input type="text" id="dt-heading" name="dt-heading" class="heading form-input-tip" size="16" autocomplete="off" value="<?php echo esc_attr( $value['heading'] ); ?>" tabindex="6" style="width:99.5%"/></td>
             </tr>
             <tr valign="top">
-                <td><label for="dt-additional-info"><?php _e( 'Additional information:', FB_DT_TEXTDOMAIN ); ?></label></td>
+                <td><label for="dt-additional-info"><?php esc_html_e( 'Additional information:', FB_DT_TEXTDOMAIN ); ?></label></td>
                 <td><textarea cols="16" rows="5" id="dt-additional-info" name="dt-additional-info" class="additional-info form-input-tip code" size="20" autocomplete="off" tabindex="6" style="width:90%"/><?php echo esc_textarea( $value['additional-info'] ); ?></textarea>
                     <table id="post-status-info" cellspacing="0" style="line-height: 24px;">
                         <tbody>
@@ -1403,8 +1406,8 @@ class SchemaSettings
                 </td>
             </tr>
             <tr valign="top">
-                <td><label for="dt-listdata"><?php _e( 'Listdata:', FB_DT_TEXTDOMAIN ); ?></label></td>
-                <td><textarea cols="16" rows="10" id="dt-listdata" name="dt-listdata" class="listdata form-input-tip" size="20" autocomplete="off" tabindex="6" style="width:99.5%"/><?php echo esc_textarea( $value['listdata'] ); ?></textarea><br /><small><?php _e( 'One list per line', FB_DT_TEXTDOMAIN ) ?></small></td>
+                <td><label for="dt-listdata"><?php esc_html_e( 'Listdata:', FB_DT_TEXTDOMAIN ); ?></label></td>
+                <td><textarea cols="16" rows="10" id="dt-listdata" name="dt-listdata" class="listdata form-input-tip" size="20" autocomplete="off" tabindex="6" style="width:99.5%"/><?php echo esc_textarea( $value['listdata'] ); ?></textarea><br /><small><?php esc_html_e( 'One list per line', FB_DT_TEXTDOMAIN ); ?></small></td>
             </tr>
         </table>
         <?php

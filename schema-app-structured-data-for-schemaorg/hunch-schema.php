@@ -4,9 +4,11 @@
  * Plugin Name: Schema App Structured Data
  * Plugin URI: http://www.schemaapp.com
  * Description: This plugin adds http://schema.org structured data to your website
- * Version: 2.3.2
+ * Version: 2.4.0
  * Author: Schema App
  * Author URI: https://www.schemaapp.com
+ * License: GPL2
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
 
 try {

@@ -544,16 +544,63 @@ class SchemaFront
 	}
 
 
-	public function RemoveMicrodata( $Buffer )
-	{
-		$Buffer = preg_replace( '/[\s\n]*<(link|meta)(\s|[^>]+\s)itemprop=[\'"][^\'"]*[\'"][^>]*>[\s\n]*/imS', '', $Buffer );
+	/**
+	 * Microdata attributes to remove from elements.
+	 *
+	 * @var array
+	 */
+	private static $microdata_attributes = array( 'itemscope', 'itemtype', 'itemprop', 'itemid', 'itemref' );
 
-		for ( $I = 1; $I <= 6; $I++ )
-		{
-			$Buffer = preg_replace( '/(<[^>]*)\sitem(scope|type|prop)(=[\'"][^\'"]*[\'"])?([^>]*>)/imS', '$1$4', $Buffer );
+	/**
+	 * Remove microdata attributes (itemscope, itemtype, itemprop, itemid, itemref)
+	 * from HTML output using WP_HTML_Tag_Processor.
+	 *
+	 * This method uses WP_HTML_Tag_Processor (WordPress 6.2+) when available,
+	 * which provides safe, byte-accurate HTML manipulation. On older WordPress
+	 * versions without WP_HTML_Tag_Processor, the buffer is returned unchanged
+	 * to avoid document corruption from DOM re-serialization.
+	 *
+	 * Link and meta tags with itemprop have their microdata attributes removed
+	 * like any other element, leaving them inert but in place.
+	 *
+	 * Note: On WordPress < 6.2, this setting has no effect. Upgrade to WordPress
+	 * 6.2 or later for full Remove Microdata functionality.
+	 *
+	 * @param string $buffer The HTML content to process.
+	 * @return string The processed HTML with microdata removed, or unchanged on WP < 6.2.
+	 */
+	public function RemoveMicrodata( $buffer )
+	{
+		if ( class_exists( 'WP_HTML_Tag_Processor' ) ) {
+			return $this->RemoveMicrodataWithTagProcessor( $buffer );
 		}
 
-		return $Buffer;
+		return $buffer;
+	}
+
+
+	/**
+	 * Remove microdata attributes using WP_HTML_Tag_Processor (WordPress 6.2+).
+	 *
+	 * Iterates through all tags and removes microdata attributes. Link and meta
+	 * tags that had itemprop are left in place with their remaining attributes,
+	 * making them inert without any string-based surgery that could corrupt
+	 * the document.
+	 *
+	 * @param string $html The HTML content to process.
+	 * @return string The processed HTML with microdata attributes removed.
+	 */
+	private function RemoveMicrodataWithTagProcessor( $html )
+	{
+		$processor = new WP_HTML_Tag_Processor( $html );
+
+		while ( $processor->next_tag() ) {
+			foreach ( self::$microdata_attributes as $attr ) {
+				$processor->remove_attribute( $attr );
+			}
+		}
+
+		return $processor->get_updated_html();
 	}
 
 
