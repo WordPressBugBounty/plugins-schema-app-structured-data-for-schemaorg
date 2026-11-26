@@ -234,8 +234,8 @@ class SchemaFront
         try {
             global $post;
 
-            // Exclude: empty posts, admin pages, attachments
-            if (empty($post) || is_admin() || is_attachment()) {
+            // Exclude: empty posts, admin pages, attachments, previews
+            if (empty($post) || is_admin() || is_attachment() || is_preview()) {
                 return;
             }
             // Exclude WooCommerce account and checkout pages
@@ -403,8 +403,8 @@ class SchemaFront
             }
 
             // Only POST to Page Count API if default markup has changed, graph URI is specified,
-            // and this is not a search page.
-            if ($DefaultMarkup && !empty($this->Settings['graph_uri']) && !is_search()) {
+            // this is not a search page, and the post is published.
+            if ($DefaultMarkup && !empty($this->Settings['graph_uri']) && !is_search() && get_post_status($post) === 'publish') {
                 $DefaultMarkupChanged = $this->checkCachedDefaultMarkup($post->ID, $DefaultMarkup);
                 if ($DefaultMarkupChanged) {
                     $this->post_to_page_count($DefaultMarkup);

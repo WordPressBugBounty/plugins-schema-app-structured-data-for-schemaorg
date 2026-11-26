@@ -8,7 +8,7 @@ Author: Schema App
 Requires at least: 4.4
 Requires PHP: 5.4
 Tested up to: 7.1
-Stable tag: 2.4.0
+Stable tag: 2.4.1
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,11 @@ You'll find the [FAQ on SchemaApp.com](https://www.schemaapp.com/solutions/wordp
 5. Link to Validation
 
 == Changelog ==
+= 2.4.1 =
+Release Date - 25 Nov 2026
+- Fix, Do not render markup on preview pages
+- Fix, Do not send markup to Schema App unless the post is published
+
 = 2.4.0 =
 Release Date - 05 Nov 2026
 - Drop support for Remove Microdata on WordPress versions earlier than 6.2. Setting has no effect on earlier WordPress versions
@@ -740,6 +745,9 @@ Release Date - 18 July 2018
 - First version 
 
 == Upgrade Notice ==
+
+= 2.4.1 =
+- Preview pages no longer receive Schema Markup, and unpublished posts are not sent to Schema App
 
 = 2.4.0 =
 - Remove Microdata requires WordPress 6.2 or later. Setting has no effect on earlier WordPress versions
